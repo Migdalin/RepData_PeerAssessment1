@@ -7,20 +7,21 @@ output:
 
 
 ## Loading and preprocessing the data
-``` {r, setoptions, echo=TRUE}
+
+```r
 LoadData <- function() {
     csvFile <- unzip("activity.zip")
     result <- read.csv(csvFile, colClasses=c("integer", "Date", "integer"))
     return(result)
 }
-
 ```
 
 
 ## What is mean total number of steps taken per day?
 
 
-``` {r}
+
+```r
 GetStepsPerDay <- function(iData) {
     suppressPackageStartupMessages(library(dplyr))
     
@@ -62,14 +63,20 @@ ShowMeanAndMedian <- function() {
 }
 
 ShowStepsPerDayHist()
-ShowMeanAndMedian()
-
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
+
+```r
+ShowMeanAndMedian()
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-1-2.png)<!-- -->
 
 
 ## What is the average daily activity pattern?
-``` {r}
 
+```r
 GetDailyActivityPattern <- function(iData) {
     suppressPackageStartupMessages(require(dplyr))
     dailyPattern <- aggregate(iData$steps, by=list(iData$interval), mean, na.rm=TRUE)
@@ -103,13 +110,14 @@ PlotActivityTimeSeries <- function() {
 }
 
 PlotActivityTimeSeries()
-
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
 
 ## Imputing missing values
-``` {r}
 
+```r
 ShowInfoAboutNAs <- function() {
     theData <- LoadData()
     totalNumberOfRows <- dim(theData)[1]
@@ -168,13 +176,20 @@ ShowHistForReplacedNAs <- function() {
 }
 
 ShowInfoAboutNAs()
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+
+```r
 ShowHistForReplacedNAs()
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-3-2.png)<!-- -->
+
 
 ## Are there differences in activity patterns between weekdays and weekends?
-``` {r}
 
+```r
 AddDayTypeColumn <- function(iData) {
     iData$DayType <- weekdays(iData$date) %in% c("Saturday", "Sunday")
     iData$DayType <- as.factor(iData$DayType)
@@ -208,6 +223,7 @@ PlotActivityByDayType <- function() {
 }
 
 PlotActivityByDayType()
-
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
